@@ -61,5 +61,15 @@ impl MiContratoRW {
     env.storage().instance().set(&usuario, &datos);
     }
 
-}
+    /// Registrar la última acción realizada por un usuario.
+    pub fn registrar_ultima_accion(env: Env, usuario: Address, accion: Symbol) {
+    let mut datos = env
+        .storage()
+        .instance()
+        .get::<Address, Map<Symbol, u32>>(&usuario)
+        .unwrap_or_else(|| Map::new(&env));
+    datos.set(symbol_short!("ultima_accion"), accion.to_string().into());
+    env.storage().instance().set(&usuario, &datos);
+    }
 
+}
