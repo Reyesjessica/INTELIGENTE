@@ -1,6 +1,14 @@
 [package]
 name = "mi_contratos_rw"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
+soroban-sdk = "20.3.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = "z"
+
