@@ -48,5 +48,18 @@ impl MiContratoRW {
     pub fn eliminar_usuario(env: Env, usuario: Address) {
         env.storage().instance().remove(&usuario);
     }
+
+    /// Resetear los contadores de lectura y escritura de un usuario.
+    pub fn resetear_registro(env: Env, usuario: Address) {
+    let mut datos = env
+        .storage()
+        .instance()
+        .get::<Address, Map<Symbol, u32>>(&usuario)
+        .unwrap_or_else(|| Map::new(&env));
+    datos.set(symbol_short!("lectura"), 0);
+    datos.set(symbol_short!("escritura"), 0);
+    env.storage().instance().set(&usuario, &datos);
+    }
+
 }
 
