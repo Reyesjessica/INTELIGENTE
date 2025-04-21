@@ -72,4 +72,12 @@ impl MiContratoRW {
     env.storage().instance().set(&usuario, &datos);
     }
 
+    /// Obtener la última acción realizada por un usuario.
+    pub fn obtener_ultima_accion(env: Env, usuario: Address) -> Option<Symbol> {
+    env.storage()
+        .instance()
+        .get::<Address, Map<Symbol, u32>>(&usuario)
+        .and_then(|datos| datos.get(symbol_short!("ultima_accion")))
+    }
+
 }
